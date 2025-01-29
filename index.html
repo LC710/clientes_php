@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TrabalhoPOO</title>
+  <!-- Para o BootStrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
+  <!-- Para os ICONS do BootStrap -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+  <!-- Para o JQuery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+
+  <style>
+    :root {
+      --primary-color: #0156a5;
+      --shadow-color: #CCC;
+    }
+
+    header {
+      background-color: var(--primary-color);
+      height: 60px;
+      text-align: center;
+      line-height: 60px;
+      box-shadow: 0 1px 2px var(--shadow-color);
+    }
+
+    table {
+      text-align: center;
+    }
+
+    /* form{
+      border: 1px solid black;
+    } */
+
+    .container {
+      /* border: 1px solid black; */
+      box-shadow: 2px 2px 10px var(--shadow-color);
+      padding: 15px;
+      /* margin: 0 auto; */
+    }
+
+    .cadastrar {
+      width: 100%;
+      margin-bottom: 20px;
+    }
+
+    label {
+      font-weight: bold;
+    }
+
+
+    @media(max-width:480px) {
+      /* .email{
+        display: none;
+      } */
+
+      .phone,
+      .city {
+        display: none;
+      }
+
+
+    }
+
+    /* .light{
+      background-color: white;
+    } */
+
+    .dark {
+      background-color: rgb(41, 41, 41);
+      color: white;
+    }
+  </style>
+
+  <script defer>
+    function toggleTheme() {
+
+      // const button = document.querySelector("#toggleTheme");
+      const body = document.querySelector("body");
+      // element.classList.add('new-class'); // Para Adicionar Classe
+      // element.classList.remove('new-class'); // Para Remover
+      // element.classList.replace('old-class', 'new-class'); // Trocar uma classe por outra:
+      // element.classList.toggle('is-active'); // Fazer o toggle de uma classe. Isto é, adicionar a classe se não existir e, caso contrário, remover:
+      body.classList.toggle('dark');
+    }
+  </script>
+
+</head>
+<!-- <body style="background-color: rgb(192, 192, 192);"> -->
+<!-- <body style="background-color: rgb(88, 78, 226);"> -->
+<!-- <body style="background-color: rgb(14, 7, 49);"> -->
+
+<body class="dark">
+
+  <!-- Se der tempo fazer um modo claro e escuro -->
+
+  <header>
+    <h1 class="header-title">Cadastro Clientes PHP</h1>
+  </header>
+
+  <button class="" id="toggleTheme" onclick="toggleTheme()">Mudar Tema <i class="bi bi-highlights"></i></button>
+
+  <!-- FORM: -->
+
+  <div class="container mt-3">
+    <h2>Tecnologia⚙: PHP, SQL, JQuery, BootStrap</h2>
+    <form id="formCreate" action="">
+      <!-- Se funcionar colocar o "input type hidden do que com o valor para editar" no "form" do modal tbm  -->
+      <input id="type" type="hidden" name="type" value="create">
+
+      <!-- "id" do registro/cliente -->
+      <!-- <input id="id" type="hidden" name="id" value=""> -->
+
+      <div class="row">
+        <div class="mb-3 mt-3 col">
+          <label for="name">Name:</label>
+          <input type="text" class="form-control" id="name" placeholder="Enter Name" name="name">
+        </div>
+
+        <div class="mb-3 mt-3 col">
+          <label for="email">Email:</label>
+          <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="mb-3 mt-3 col">
+          <label for="phone">Telefone:</label>
+          <input type="tel" class="form-control" id="phone" placeholder="Enter Phone" name="phone">
+        </div>
+        <div class="mb-3 mt-3 col">
+          <label for="city">Cidade:</label>
+          <input type="text" class="form-control" id="city" placeholder="Enter City" name="city">
+        </div>
+      </div>
+      <!-- <div class="form-check mb-3">
+      <label class="form-check-label">
+        <input class="form-check-input" type="checkbox" name="remember"> Remember me
+      </label>
+    </div> -->
+      <button id="create_btn" class="btn btn-primary cadastrar">Cadastra</button>
+      <!-- <button type="submit" class="btn btn-success">Submit</button> -->
+    </form>
+
+
+    <!-- TABLE: -->
+
+    <!-- <div class="container mt-3"> -->
+    <h2>Dark Striped Table</h2>
+    <!-- <p>Combine .table-dark and .table-striped to create a dark, striped table:</p>             -->
+    <table class="table table-dark table-striped table-hover">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th class="email">Email</th>
+          <th class="phone">Telefone</th>
+          <th class="city">Cidade</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody id="clientsTable">
+
+      </tbody>
+    </table>
+    <!-- </div> -->
+
+
+
+  </div>
+
+  <!-- The Modal -->
+  <div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Modal Heading</h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+          <!-- Modal body.. -->
+          <h2>Stacked form</h2>
+
+          <form action="/action_page.php">
+
+            <input type="hidden" id="modal-id" name="id">
+
+            <div class="row">
+              <div class="mb-3 mt-3 col">
+                <label for="name">Name:</label>
+                <input type="text" class="form-control" id="modal-name" placeholder="Enter Name" name="name">
+              </div>
+
+              <div class="mb-3 mt-3 col">
+                <label for="email">Email:</label>
+                <input type="email" class="form-control" id="modal-email" placeholder="Enter email" name="email">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="mb-3 mt-3 col">
+                <label for="phone">Telefone:</label>
+                <input type="tel" class="form-control" id="modal-phone" placeholder="Enter Phone" name="phone">
+              </div>
+              <div class="mb-3 mt-3 col">
+                <label for="city">Cidade:</label>
+                <input type="text" class="form-control" id="modal-city" placeholder="Enter City" name="city">
+              </div>
+            </div>
+            <!-- <div class="form-check mb-3">
+              <label class="form-check-label">
+                <input class="form-check-input" type="checkbox" name="remember"> Remember me
+              </label>
+            </div> -->
+          </form>
+
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <!-- Vamos colocar o "data-bs-dismiss="modal" " no botão de salvar tbm para fechar o "modal" quando clicar para salvar as alterações; -->
+          <button id="saveChangesBtn" type="submit" class="btn btn-primary" data-bs-dismiss="modal">Editar</button>
+          <!-- <button type="submit" class="btn btn-primary">Editar</button> -->
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+
+    let clients = []; // Variável global para armazenar os clientes
+
+    $(document).ready(() => { // O "$(document).ready()" é útil se você quiser garantir que seu código seja executado apenas após o carregamento completo do DOM e do JQuery. 
+
+
+      $("#create_btn").click((e) => {
+        e.preventDefault();
+
+        // const form = document.querySelector("#formCreate");
+        // console.log(form);
+        // let dados = new FormData(form);
+        // console.log(dados);
+
+        let dados = {
+          type: $("#type").val(),
+          name: $("#name").val(),
+          email: $("#email").val(),
+          phone: $("#phone").val(),
+          city: $("#city").val()
+        }
+
+        console.log(dados);
+
+
+        $.post("db.php", dados, function (response, status) {
+
+          // console.log("Response:", response);
+          console.log("Status: ", status);
+          console.log(response);
+          // responseParse = JSON.parse(response); // Não vamos usar o "JSON.parse(response);", pois estamos usando o "header('Content-Type: application/json');" lá no "BACK" no "db.php";
+          // console.log("ResponseParse:", responseParse);
+
+          // Atualize a tabela dinamicamente após criação
+          // if (responseParse.success) { 
+          if (response.success) {
+            alert("Cliente cadastrado com sucesso!");
+            // location.reload(); // Simples, mas funcional // Se quiser um "reload/refresh" na página;
+            // populateTable(responseParse.clientes);
+            // populateTable(response.clientes);
+            console.log("Teste:", response.clientes);
+            clients = response.clientes;
+            populateTable(clients);
+
+            // Esvaziar os campos de para criar;
+            $("#name").val(""),
+              $("#email").val(""),
+              $("#phone").val(""),
+              $("#city").val("")
+
+          } else {
+            alert("Erro ao cadastrar cliente: " + response.error);
+          }
+
+        }).fail(function () {
+          alert("Erro ao conectar ao servidor.");
+        });
+
+
+      })
+
+
+      function populateTable(clients) {
+        const tableBody = $("#clientsTable"); // Seleciona o corpo da tabela
+        tableBody.empty(); // Limpa os dados antigos
+
+        clients.forEach(client => {
+          // Cria uma linha com os dados do cliente
+          const row = `
+      <tr>
+        <td>${client.name}</td>
+        <td class="email" >${client.email}</td>
+        <td class="phone" >${client.phone}</td>
+        <td class="city">${client.city}</td>
+        <td style="display: flex; justify-content: center; gap: 4px;">
+          <button class="btn btn-primary edit-btn" data-id="${client.id}" data-bs-toggle="modal" data-bs-target="#myModal">
+            <i class="bi bi-pencil-square"></i>
+          </button>
+          <button class="btn btn-danger delete-btn" data-id="${client.id}">
+            <i class="bi bi-trash"></i>
+          </button>
+        </td>
+      </tr>
+    `;
+          tableBody.append(row);
+        });
+      }
+
+      // let clients = []; // Variável global para armazenar os clientes
+
+      // Posso transforma isso em uma função para ser chamada no botão para abrir o modal para editar por exemplo;
+      // Exemplo de chamada da função após obter os dados:
+      // function obterClientes(){
+
+      // "OBTER/READ" os dados dos CLintes:
+      $.post("db.php", false, function (response) {
+        console.log(response);
+        // const responseParse = JSON.parse(response); // Não vamos usar o "JSON.parse(response);", pois estamos usando o "header('Content-Type: application/json');" lá no "BACK" no "db.php";
+        // console.log(responseParse);
+
+        // if (responseParse.success) {
+        if (response.success) {
+          clients = response.clientes; // Armazena os dados na variável global
+          // populateTable(responseParse.clientes);
+          populateTable(clients);
+
+          console.log(clients)
+          // return response.clientes;
+
+        } else {
+          alert("Erro ao carregar os clientes.");
+        }
+      }).fail(() => {
+        alert("Erro ao conectar ao servidor.");
+      });
+
+      // }
+
+      // obterClientes()
+      // $(document).ready(async () => {
+      // Função do Botão para preencher dados no "MODAL":
+      $(document).on("click", ".edit-btn", function () { // ".edit-btn" é a classe do botão, colocamos o "id" do cliente não no "id" do botão, mas no "data-id"(data-*) quando criamos com a função "populateTable()", veja a explicação do "this" abaixo;
+        const id = $(this).data("id"); // O "This" e referente ao botão que foi clicado, vai pegar o "data-*", nesse caso o "data-id" do botão que foi clicado, cada botão tem o "data-id" do seu registro que foi escrito quando criamos a "tr" com o a função "populateTable()";
+        console.log("Clicou no Edit BTN")
+        // Encontrar os dados do cliente (pode ser armazenado globalmente ou buscar novamente)
+        // const clients = obterClientes();
+        console.log(clients);
+        // const client = responseParse.clients.find(client => client.id === id);
+        const client = clients.find(client => client.id === id);
+
+        // Preenche os campos do modal com os dados do cliente
+        $("#modal-name").val(client.name);
+        $("#modal-email").val(client.email);
+        $("#modal-phone").val(client.phone);
+        $("#modal-city").val(client.city);
+
+        // Armazena o ID no modal (para usar na submissão da edição)
+        $("#modal-id").val(client.id);
+      });
+
+
+      // Função do Botão Para "EDITAR/UPDATE" os Dados do Cliente:
+      $("#saveChangesBtn").click(function () {
+        const updatedData = {
+          type: "edit",
+          id: $("#modal-id").val(),
+          name: $("#modal-name").val(),
+          email: $("#modal-email").val(),
+          phone: $("#modal-phone").val(),
+          city: $("#modal-city").val()
+        };
+
+        $.post("db.php", updatedData, function (response) {
+          // const responseParse = JSON.parse(response); // Não vamos usar o "JSON.parse(response);", porque estamos usando o "header('Content-Type: application/json');" Lá no arquivo "db.php"(pode ser que mudemos o nome desse arquivo depois)/
+          // if (responseParse.success) {
+          if (response.success) {
+            alert("Cliente atualizado com sucesso!");
+            // Atualizar a tabela ou recarregar os dados
+            // location.reload(); // Não vamos usar o "reload/refresh" na página, mas ficar aqui para aprendizado e caso precisar;
+            console.log("EditClientes: ", response.clientes);
+            clients = response.clientes;
+            populateTable(clients); // Função para atualizar a tabela sem "reload/refresh" na página;
+          } else {
+            // alert("Erro ao atualizar cliente: " + responseParse.error);
+            alert("Erro ao atualizar cliente: " + response.error);
+          }
+        }).fail(() => {
+          alert("Erro ao conectar ao servidor.");
+        });
+      });
+
+
+
+      // "DELETE/EXCLUSÃO", função do Botão para excluir/deletar um registro/cliente;
+      $(document).on("click", ".delete-btn", function () { // ".delete-btn" é a classe do botão, colocamos o "id" do cliente não no "id" do botão, mas no "data-id"(data-*) quando criamos com a função "populateTable()", veja a explicação do "this" abaixo;
+        const id = $(this).data("id"); // O "This" e referente ao botão que foi clicado, vai pegar o "data-*", nesse caso o "data-id" do botão que foi clicado, cada botão tem o "data-id" do seu registro que foi escrito quando criamos a "tr" com o a função "populateTable()";
+        console.log("Antes do Delete, clients:", clients);
+
+        if (confirm("Tem certeza de que deseja excluir este cliente?")) {
+          console.log("Antes do Delete, clients:", clients);
+          $.post("db.php", { type: "delete", id: id }, function (response) {
+            // const responseParse = JSON.parse(response); // Não vamos usar o "JSON.parse(response);", porque estamos usando o "header('Content-Type: application/json');" Lá no arquivo "db.php"(pode ser que mudemos o nome desse arquivo depois)/
+            // if (responseParse.success) {
+            if (response.success) {
+              alert("Cliente excluído com sucesso!");
+              // Atualize a tabela removendo a linha correspondente
+              $(`button[data-id='${id}']`).closest("tr").remove();
+
+              // // Para atualizar o "clients" poderiamos fazer um "read" para ir ao banco ele trazer os dados, mas atualizando a variável "clients" evita de ter que fazer mais uma "requisição" ao banco de dados;
+              const indexDelete = clients.findIndex((client) => client.id == id);
+              clients.splice(indexDelete, 1);
+              console.log("Depois do Delete, clients:", clients);
+            } else {
+              // alert("Erro ao excluir cliente: " + responseParse.error);
+              alert("Erro ao excluir cliente: " + response.error);
+            }
+          }).fail(() => {
+            alert("Erro ao conectar ao servidor.");
+          });
+        }
+      });
+
+
+    })
+
+
+  </script>
+
+</body>
+
+</html>
